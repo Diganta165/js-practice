@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        .primary__button,.arithmetic_operation_button{
+            background-color: palegreen;
+            padding: 5px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <div style='display:flex; justify-content:space-evenly'>
+            <div>
+                <form>
+                    <label>First Number:</label>
+                    <input type="text" id="first-number" onchange="firstNumber()" />
+                    <label>Second Number:</label>
+                    <input type="text" id="second-number" />
+                    <input type="submit" value="Submit">
+                </form>
+
+            </div>
+            <div>
+                <!-- <form> -->
+                <input type="checkbox" id="addition" name="add" onclick="handleAddition()">
+                <label for="add">Addition</label><br>
+                <input type="checkbox" id="substraction" name="sub" onclick="handleSubstraction()">
+                <label for="sub">Substraction</label><br>
+                <input type="checkbox" id="multiplication" name="multi" value="multi" onclick="handleMultiplication()">
+                <label for="multi">Multiplication</label><br>
+                <input type="checkbox" id="division" name="div" value="div" onclick="handleDivision()">
+                <label for="div">Division</label><br>
+
+                <!-- </form> -->
+            </div>
+        </div>
+        <div id="operations">
+
+        </div>
+        <div>
+            <h4 id="result">Result:</h4>
+        </div>
+    </div>
+
+
+    <script>
+        // (()=>{
+        //     const handleAddition = () => {
+        //         console.log('hi')
+        //     const addition = document.getElementById('addition').checked
+        //     if (addition === true) {
+        //         const operationDiv = document.getElementById('operations')
+        //         let button = document.createElement('button')
+        //         button.id = "addition-button"
+        //         button.innerText = `Addition`
+        //         operationDiv.appendChild(button)
+
+
+        //     } else if (addition === false) {
+        //         document.getElementById('addition-button').remove()
+        //     }
+
+        // }
+        // handleAddition();
+
+        // }) ();
+        // Arithmatic Operation form Started 
+        const handleAddition = () => {
+            const additionCheck = document.getElementById('addition').checked
+            if (additionCheck === true) {
+                const operationDiv = document.getElementById('operations')
+                let addButton = additionButton("Addition", addition);
+                operationDiv.appendChild(addButton)
+
+            } else if (additionCheck === false) {
+                document.getElementById('add').remove()
+                document.getElementById('result').innerText = `Result:`
+                // additionButton.remove()
+            }
+
+        }
+
+        const handleSubstraction = () => {
+            let substractionCheck = document.getElementById('substraction').checked
+            if (substractionCheck === true) {
+                const operationDiv = document.getElementById('operations')
+                let subButton = substractionButton("Substraction", substraction);
+                operationDiv.appendChild(subButton)
+
+            } else if (substractionCheck === false) {
+                document.getElementById('sub').remove()
+                document.getElementById('result').innerText = `Result:`
+            }
+
+        }
+
+        const handleMultiplication = () => {
+            const multiplicationCheck = document.getElementById('multiplication').checked
+            if (multiplicationCheck === true) {
+                const operationDiv = document.getElementById('operations')
+                let mulButton = multiplicationButton("Multiplication", multiplication);
+                operationDiv.appendChild(mulButton)
+
+
+            } else if (multiplicationCheck === false) {
+                document.getElementById('mul').remove()
+                document.getElementById('result').innerText = `Result:`
+            }
+
+        }
+
+        const handleDivision = () => {
+            const division = document.getElementById('division').checked
+            if (division === true) {
+                const operationDiv = document.getElementById('operations')
+                let button = document.createElement('button')
+                button.id = "division-button"
+                button.innerText = `Division`
+                operationDiv.appendChild(button)
+
+            } else if (division === false) {
+                document.getElementById('division-button').remove()
+            }
+
+        }
+
+        // Arithmetic Operation Ended 
+
+        // Input started 
+
+        const firstNumber = () => {
+
+            return document.getElementById('first-number').value;
+
+        }
+
+        const secondNumber = () => {
+            return document.getElementById('second-number').value;
+        }
+
+        //Input ended
+
+        // Addition Functionalities 
+
+        // const addNumbers = ()=>{
+        // document.getElementById('addition-button').addEventListener('click', function () {
+        //     // console.log(this.firstNumber())
+        //     console.log('Hi')
+        // })
+        // }
+
+
+        // ************************** //
+
+        // function elementMaker(name, className, id) {
+        //     try {
+        //         const element = document.createElement(name);
+        //         className && (element.className = className.join(" "));
+        //         id && (element.id = id);
+        //         return element;
+        //     } catch (error) {
+        //         console.log(error.message);
+        //     }
+        // }
+        // function primaryButton(name, handler){
+        //     const button = elementMaker("button", ["primary__button"]);
+        //     button.innerText = name;
+        //     button.addEventListener("click", handler);
+        //     return button;
+        // }
+        // const sumBtn = primaryButton("jog korbe", addition);
+        // function addition(){
+        //     const n1 = +document.getElementById("first-number").value,
+        //     n2 = +document.getElementById("second-number").value;
+        //     console.log(n1 + n2);
+        //     sumBtn.remove();
+        // }
+        // function subs(){
+        //     const n1 = +document.getElementById("first-number").value,
+        //     n2 = +document.getElementById("second-number").value;
+        //     console.log(n1 - n2);
+        // }
+        // document.body.append(sumBtn);
+        // document.body.append(primaryButton("substraction", subs));
+
+
+        function elementMaker(name, className, id) {
+            try {
+                const element = document.createElement(name);
+                className && (element.className = className.join(" "));
+                id && (element.id = id);
+                return element;
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        
+
+        const additionButton = (name, handler) => {
+            const button = elementMaker('button', ['arithmetic_operation_button'], 'add');
+            button.innerText = name;
+            button.addEventListener('click', handler);
+            return button;
+
+        }   
+        
+
+        const addition = () =>{
+        
+            const firstInput = +document.getElementById('first-number').value
+            const secondInput = +document.getElementById('second-number').value
+            const result = firstInput + secondInput
+
+            document.getElementById('result').innerText = `
+               Result: ${result}
+            `
+
+        }
+        // additionButton("Addition", addition);
+
+        //Substraction
+        const substractionButton = (name, handler) =>{
+            const button = elementMaker('button', ['arithmetic_operation_button'], 'sub');
+            button.innerText = name;
+            button.addEventListener('click', handler);
+            return button;
+        }
+
+        const substraction = () =>{
+            const firstInput = +document.getElementById('first-number').value
+            const secondInput = +document.getElementById('second-number').value
+            const result = firstInput - secondInput
+
+            document.getElementById('result').innerText = `
+               Result: ${result}
+            `
+        }
+
+        // Multiplication 
+        const multiplicationButton = (name, handler) =>{
+            const button = elementMaker('button', ['arithmetic_operation_button'], 'mul');
+            button.innerText = name;
+            button.addEventListener('click', handler);
+            return button;
+        }
+
+        const multiplication = () =>{
+            const firstInput = +document.getElementById('first-number').value
+            const secondInput = +document.getElementById('second-number').value
+            const result = firstInput * secondInput
+
+            document.getElementById('result').innerText = `
+               Result: ${result}
+            `
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
