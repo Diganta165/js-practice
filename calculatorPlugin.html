@@ -24,19 +24,19 @@
                     <input type="text" id="first-number" onchange="firstNumber()" />
                     <label>Second Number:</label>
                     <input type="text" id="second-number" />
-                    <input type="submit" value="Submit">
+                    <!-- <input type="submit" value="Submit"> -->
                 </form>
 
             </div>
             <div>
                 <!-- <form> -->
-                <input type="checkbox" id="addition" name="add" onclick="handleAddition()">
+                <input type="checkbox" id="addition" name="add" onclick="handleAddition(1)" >
                 <label for="add">Addition</label><br>
-                <input type="checkbox" id="substraction" name="sub" onclick="handleSubstraction()">
+                <input type="checkbox" id="substraction" name="sub" onclick="handleSubstraction(2)">
                 <label for="sub">Substraction</label><br>
-                <input type="checkbox" id="multiplication" name="multi" value="multi" onclick="handleMultiplication()">
+                <input type="checkbox" id="multiplication" name="multi" value="multi" onclick="handleMultiplication(3)">
                 <label for="multi">Multiplication</label><br>
-                <input type="checkbox" id="division" name="div" value="div" onclick="handleDivision()">
+                <input type="checkbox" id="division" name="div" value="div" onclick="handleDivision(4)">
                 <label for="div">Division</label><br>
 
                 <!-- </form> -->
@@ -52,6 +52,7 @@
 
 
     <script>
+        // (()=>{
         // (()=>{
         //     const handleAddition = () => {
         //         console.log('hi')
@@ -73,12 +74,15 @@
 
         // }) ();
         // Arithmatic Operation form Started 
-        const handleAddition = () => {
+        // (()=>{ 
+            const handleAddition = (num) => {
             const additionCheck = document.getElementById('addition').checked
             if (additionCheck === true) {
                 const operationDiv = document.getElementById('operations')
                 let addButton = additionButton("Addition", addition);
                 operationDiv.appendChild(addButton)
+                sortButtons(addButton, num);
+                
 
             } else if (additionCheck === false) {
                 document.getElementById('add').remove()
@@ -87,13 +91,16 @@
             }
 
         }
+    // }) ();
+        
 
-        const handleSubstraction = () => {
+        const handleSubstraction = (num) => {
             let substractionCheck = document.getElementById('substraction').checked
             if (substractionCheck === true) {
                 const operationDiv = document.getElementById('operations')
                 let subButton = substractionButton("Substraction", substraction);
                 operationDiv.appendChild(subButton)
+                sortButtons(subButton, num)
 
             } else if (substractionCheck === false) {
                 document.getElementById('sub').remove()
@@ -102,12 +109,13 @@
 
         }
 
-        const handleMultiplication = () => {
+        const handleMultiplication = (num) => {
             const multiplicationCheck = document.getElementById('multiplication').checked
             if (multiplicationCheck === true) {
                 const operationDiv = document.getElementById('operations')
                 let mulButton = multiplicationButton("Multiplication", multiplication);
                 operationDiv.appendChild(mulButton)
+                sortButtons(mulButton, num)
 
 
             } else if (multiplicationCheck === false) {
@@ -117,17 +125,30 @@
 
         }
 
-        const handleDivision = () => {
-            const division = document.getElementById('division').checked
-            if (division === true) {
-                const operationDiv = document.getElementById('operations')
-                let button = document.createElement('button')
-                button.id = "division-button"
-                button.innerText = `Division`
-                operationDiv.appendChild(button)
+        const handleDivision = (num) => {
+            // const division = document.getElementById('division').checked
+            // if (division === true) {
+            //     const operationDiv = document.getElementById('operations')
+            //     let button = document.createElement('button')
+            //     button.id = "division-button"
+            //     button.innerText = `Division`
+            //     operationDiv.appendChild(button)
 
-            } else if (division === false) {
-                document.getElementById('division-button').remove()
+            // } else if (division === false) {
+            //     document.getElementById('division-button').remove()
+            // }
+            const divisionCheck = document.getElementById('division').checked
+            if (divisionCheck === true) {
+                const operationDiv = document.getElementById('operations')
+                let divButton = divisionButton("Division", division);
+                operationDiv.appendChild(divButton)
+                sortButtons(divButton, num)
+
+
+
+            } else if (divisionCheck === false) {
+                document.getElementById('divi').remove()
+                document.getElementById('result').innerText = `Result:`
             }
 
         }
@@ -262,6 +283,88 @@
             `
         }
 
+        // Division 
+        const divisionButton = (name, handler) =>{
+            const button = elementMaker('button', ['arithmetic_operation_button'], 'divi');
+            button.innerText = name;
+            button.addEventListener('click', handler);
+            return button;
+        }
+
+        const division = () =>{
+            const firstInput = +document.getElementById('first-number').value
+            const secondInput = +document.getElementById('second-number').value
+            const result = firstInput / secondInput
+
+            document.getElementById('result').innerText = `
+               Result: ${result}
+            `
+        }
+        // let arr = [additionButton("addition"), ]
+        
+        //Sort Buttons
+        // const sortButtonsHere = () =>{
+            let itemsArr = [];
+            function sortButtons (addButton, num){
+            
+            
+            let list = document.getElementById('operations')
+            console.log(list.children.length)
+            console.log('itemsArr', itemsArr)
+            
+
+            
+
+            
+            // itemsArr = [...{'button':addButton, 'number':num}]
+            itemsArr.push({'button':addButton, 'number':num})
+            console.log(itemsArr)
+                // for(items in this.itemsArr){
+                //     console.log('Yo',items)
+                // }
+
+                
+            if(list.children.length > 0){
+                
+                
+                itemsArr.sort((a, b) => {
+                        
+                        return a.number - b.number;
+                    });
+
+                    const operationDiv = document.getElementById('operations')
+                    operationDiv.innerHTML = ``;
+
+                for(let i = 0 ; i < itemsArr.length ; i++){
+                  
+                    let list = document.getElementById('operations')
+                    list.appendChild(itemsArr[i].button)
+
+                }
+                
+               
+
+            }else{
+                console.log(itemsArr)
+            }
+
+            console.log('New Items', itemsArr )
+
+            
+            
+            
+            
+
+            // for(items of itemsArr){
+            //     console.log('hlw',items)
+            // }
+            
+        }
+        // }
+        // sortButtons();
+
+
+    // }) ();
 
 
     </script>
